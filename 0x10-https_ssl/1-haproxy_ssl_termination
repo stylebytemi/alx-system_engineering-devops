@@ -37,7 +37,7 @@ defaults
 	errorfile 504 /etc/haproxy/errors/504.http
 
 frontend http
-        bind *:79
+        bind *:80
         mode http
         default_backend web-backend
 
