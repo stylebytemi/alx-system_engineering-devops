@@ -1,26 +1,27 @@
 #!/usr/bin/python3
-# -*- coding: utf-8 -*-
-from requests import get
+'''
+Python script that returns information using REST API
+'''
+import requests
 from sys import argv
 
-
-if __name__ == '__main__':
-    user_id = argv[1]
-    url = 'https://jsonplaceholder.typicode.com/users/{}'.format(user_id)
-    response = get(url)
-    name = response.json().get('name')
-
-    url = 'https://jsonplaceholder.typicode.com/users/{}/todos'.format(user_id)
-    response = get(url)
-    tasks = response.json()
-    done = 0
-    done_tasks = []
-    for task in tasks:
-        if task.get('completed'):
-            done_tasks.append(task)
-            done += 1
-
-    print("Employee {} is done with tasks({}/{}):"
-          .format(name, done, len(tasks)))
-    for task in done_tasks:
-        print("\t {}".format(task.get('title')))
+if __name__ == "__main__":
+    if len(argv) > 1:
+        user = argv[1]
+        url = "https://jsonplaceholder.typicode.com/"
+        req = requests.get("{}users/{}".format(url, user))
+        name = req.json().get("name")
+        if name is not None:
+            jreq = requests.get(
+                "{}todos?userId={}".format(
+                    url, user)).json()
+            alltsk = len(jreq)
+            completedtsk = []
+            for t in jreq:
+                if t.get("completed") is True:
+                    completedtsk.append(t)
+            count = len(completedtsk)
+            print("Employee {} is done with tasks({}/{}):"
+                  .format(name, count, alltsk))
+            for title in completedtsk:
+                print("\t {}".format(title.get("title")))
