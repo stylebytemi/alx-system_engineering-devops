@@ -15,5 +15,5 @@ backend allservers
     timeout server 5s
     balance roundrobin
     mode http
-    server web-02 52.87.216.232
-    server web-01 100.26.20.221
+    server web-02 52.87.216.232:80
+    server web-01 100.26.20.221:80
