@@ -4,8 +4,8 @@ global
     tune.ssl.default-dh-param 2048
 
 frontend bnb_https
-	bind *:80
-    bind *:443 ssl crt /etc/letsencrypt/live/www.dummynooks.tech/www.dummynooks.pem 
+    bind *:80
+    bind *:443 ssl crt /etc/letsencrypt/live/www.dummynooks.tech/www.dummynooks.pem
     timeout client 60s
     mode http
     default_backend allservers
