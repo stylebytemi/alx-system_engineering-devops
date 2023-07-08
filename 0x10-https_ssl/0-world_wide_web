@@ -2,6 +2,16 @@
 
 # Configure your domain zone to display information about subdomains
 
+# Check if the domain argument is provided
+if [ "$#" -lt 1 ]; then
+    echo "Error: Domain name not provided. Please provide the domain name as an argument."
+    echo "Example usage: ./script.sh example.com"
+    exit 1
+fi
+
+# Store the domain argument in a variable
+domain="$1"
+
 if [ "$#" = 1 ]
 then
     subdomains=("www" "lb-01" "web-01" "web-02")
