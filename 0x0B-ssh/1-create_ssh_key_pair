@@ -1,3 +1,13 @@
 #!/usr/bin/env bash
-# a bash script to create a key pair
-ssh-keygen -N betty -b 4096 -f school
+
+# Set the name of the private key file
+keyname="school"
+
+# Generate the key pair with 4096 bits and the specified name
+ssh-keygen -b 4096 -f "$keyname" -N betty 
+
+# Protect the private key with the passphrase "betty"
+#ssh-keygen -p -N betty -f "$keyname"
+
+# Print a message to indicate that the key pair has been created
+echo "RSA key pair created: $keyname (private key) and $keyname.pub (public key)"
