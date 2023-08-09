@@ -7,7 +7,6 @@ import re
 import requests
 import sys
 
-
 def add_title(dictionary, hot_posts):
     """ Adds item into a list """
     if len(hot_posts) == 0:
@@ -15,13 +14,14 @@ def add_title(dictionary, hot_posts):
 
     title = hot_posts[0]['data']['title'].split()
     for word in title:
+        word_lower = word.lower()
         for key in dictionary.keys():
-            c = re.compile("^{}$".format(key), re.I)
-            if c.findall(word):
+            key_lower = key.lower()
+            c = re.compile(r"\b{}\b".format(re.escape(key_lower)), re.I)
+            if c.findall(word_lower):
                 dictionary[key] += 1
     hot_posts.pop(0)
     add_title(dictionary, hot_posts)
-
 
 def recurse(subreddit, dictionary, after=None):
     """ Queries to Reddit API """
@@ -51,7 +51,6 @@ def recurse(subreddit, dictionary, after=None):
         return
     recurse(subreddit, dictionary, after=after)
 
-
 def count_words(subreddit, word_list):
     """ Init function """
     dictionary = {}
@@ -61,12 +60,16 @@ def count_words(subreddit, word_list):
 
     recurse(subreddit, dictionary)
 
-    l = sorted(dictionary.items(), key=lambda kv: kv[1])
-    l.reverse()
+    l = sorted(dictionary.items(), key=lambda kv: (-kv[1], kv[0]))
 
     if len(l) != 0:
         for item in l:
-            if item[1] is not 0:
+            if item[1] != 0:
                 print("{}: {}".format(item[0], item[1]))
     else:
         print("")
+
+# Example usage
+subreddit = 'python'
+word_list = ['python', 'javascript', 'java']
+count_words(subreddit, word_list)
