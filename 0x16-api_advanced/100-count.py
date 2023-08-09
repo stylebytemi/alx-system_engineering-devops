@@ -5,7 +5,6 @@ the top ten hot posts of a subreddit
 """
 import re
 import requests
-import sys
 
 def add_title(dictionary, hot_posts):
     if not hot_posts:
@@ -14,7 +13,7 @@ def add_title(dictionary, hot_posts):
     title = hot_posts[0]['data']['title'].split()
     for word in title:
         for key in dictionary.keys():
-            c = re.compile("^{}$".format(key), re.I)
+            c = re.compile(r"\b{}\b".format(re.escape(key)), re.I)
             if c.findall(word):
                 dictionary[key] += 1
     hot_posts.pop(0)
@@ -55,9 +54,9 @@ def count_words(subreddit, word_list):
 
     for word, count in sorted_words:
         if count != 0:
-            print("{}: {}".format(word, count))
+            print("{}: {}".format(word.lower(), count))
 
 # Example usage
-subreddit = 'python'
-word_list = ['python', 'javascript', 'java']
-count_words(subreddit, word_list)
+# subreddit = 'python'
+# word_list = ['python', 'javascript', 'java']
+# count_words(subreddit, word_list)
