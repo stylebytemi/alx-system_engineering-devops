@@ -68,8 +68,3 @@ def count_words(subreddit, word_list):
                 print("{}: {}".format(item[0], item[1]))
     else:
         print("")
-
-# Example usage
-subreddit = 'python'
-word_list = ['python', 'javascript', 'java']
-count_words(subreddit, word_list)
